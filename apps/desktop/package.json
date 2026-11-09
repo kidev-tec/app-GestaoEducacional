@@ -1,0 +1,29 @@
+{
+  "name": "erp-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ERP Platform — wrapper desktop Electron (entregável instalável)",
+  "main": "dist/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "build:main": "tsc -p tsconfig.json",
+    "build:web": "cd ../web && node ../../node_modules/vite/bin/vite.js build",
+    "build": "npm run build:web && npm run build:main",
+    "test": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "dist:linux": "electron-builder --linux deb AppImage --dir false",
+    "dist:dir": "electron-builder --linux --dir"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "^26.0.12",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7",
+    "@vitest/coverage-v8": "^3.2.7"
+  },
+  "author": {
+    "name": "ERP Platform",
+    "email": "erp@local"
+  },
+  "homepage": "https://erp.local"
+}
