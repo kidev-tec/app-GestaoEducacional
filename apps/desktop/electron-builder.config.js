@@ -12,7 +12,9 @@ module.exports = {
     buildResources: 'build',
   },
   files: [
-    'dist/**/*',
+    'dist/main.js',
+    'dist/preload.js',
+    'dist/lib.js',
     'package.json',
   ],
   extraResources: [

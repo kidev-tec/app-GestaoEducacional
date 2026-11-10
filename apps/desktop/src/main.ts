@@ -37,7 +37,7 @@ function createWindow(): void {
     return { action: 'allow' };
   });
 
-  const target = resolveTargetUrl(__dirname, process.env, app.isPackaged);
+  const target = resolveTargetUrl(__dirname, process.env, app.isPackaged, process.resourcesPath);
   if (target.kind === 'url') {
     void mainWindow.loadURL(target.url);
   } else {
