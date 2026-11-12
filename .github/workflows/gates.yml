@@ -1,0 +1,36 @@
+name: gates
+on:
+  push:
+    branches: [main, staging-local, 'feat/**']
+  pull_request:
+    branches: [main, staging-local]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout site (irmão, p/ build do web-dist)
+        uses: actions/checkout@v4
+        with:
+          repository: kidev-tec/site-GestaoEducacional
+          ref: main
+          path: site-sibling-checkout-placeholder
+      - run: |
+          # electron-builder espera ../../../site ao lado do repo app
+          rm -rf "$GITHUB_WORKSPACE/../site" 2>/dev/null || true
+          ln -s "$GITHUB_WORKSPACE/site-sibling-checkout-placeholder" "$GITHUB_WORKSPACE/../site"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - name: Instala deps do site (p/ vite build do web-dist)
+        run: npm --prefix "$GITHUB_WORKSPACE/../site" ci --ignore-scripts || npm --prefix "$GITHUB_WORKSPACE/../site" install --ignore-scripts
+      - name: Typecheck desktop
+        run: npm --prefix apps/desktop run typecheck
+      - name: Unit + coverage
+        run: npm test
+      - name: Build completo (web-dist + main)
+        run: npm --prefix apps/desktop run build
