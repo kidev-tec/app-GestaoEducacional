@@ -18,7 +18,7 @@ module.exports = {
     'package.json',
   ],
   extraResources: [
-    { from: '../web/dist', to: 'web-dist' },
+    { from: '../../../site/apps/web/dist', to: 'web-dist' },
   ],
   asar: true,
   linux: {

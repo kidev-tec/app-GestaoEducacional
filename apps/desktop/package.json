@@ -7,7 +7,7 @@
   "type": "commonjs",
   "scripts": {
     "build:main": "tsc -p tsconfig.json",
-    "build:web": "cd ../web && node ../../node_modules/vite/bin/vite.js build",
+    "build:web": "npm --prefix ../../../site run build",
     "build": "npm run build:web && npm run build:main",
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
